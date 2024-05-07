@@ -1,0 +1,21 @@
+<mat-form-field>
+  <mat-label>Region</mat-label>
+  <input matInput [formControl]="regionsControl" [matAutocomplete]="auto" />
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayRegion"
+    (optionSelected)="selectRegion($event.option.value)">
+    @for (region of regions$ | async; track region.code) {
+      <mat-option [value]="region">{{ region.nom }}</mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
+
+@if (departments.length) {
+  <mat-list>
+    @for (department of departments; track department.code) {
+      <mat-list-item [routerLink]="['departments', department.code]" matRipple>{{ department.nom }}</mat-list-item>
+    }
+  </mat-list>
+}
